@@ -1,9 +1,12 @@
 from typing import Iterable, Optional, Any
 from collections.abc import MutableSequence
+
 from node import Node, DoubleLinkedNode
 
 
 class LinkedList(MutableSequence):
+    CLASS_NODE = Node
+
     def __init__(self, data: Iterable = None):
         """Конструктор связного списка"""
         self._len = 0
@@ -15,7 +18,7 @@ class LinkedList(MutableSequence):
                 self.append(value)
 
     def append(self, value: Any):
-        append_node = Node(value)
+        append_node = self.CLASS_NODE(value)
 
         if self._head is None:
             self._head = self._tail = append_node
@@ -57,7 +60,7 @@ class LinkedList(MutableSequence):
         node.value = value
 
     def __delitem__(self, index: int):
-        if not isinstance(index, int):
+        if not isinstance(index, int):  # fixme DRY вынести в отдельный метод, например, is_valid_index
             raise TypeError()
 
         if not 0 <= index < self._len:
@@ -90,7 +93,7 @@ class LinkedList(MutableSequence):
         if not isinstance(index, int):
             raise TypeError()
 
-        insert_node = Node(value)
+        insert_node = self.CLASS_NODE(value)
 
         if index == 0:
             insert_node.next = self._head
@@ -107,13 +110,16 @@ class LinkedList(MutableSequence):
 
             self._len += 1
 
+
 class DoubleLinkedList(LinkedList):
+    CLASS_NODE = DoubleLinkedNode  # перегружаем класс узла
+
     @staticmethod
     def linked_nodes(left_node: DoubleLinkedNode, right_node: Optional[DoubleLinkedNode] = None) -> None:
         left_node.next = right_node
         right_node.prev = left_node
 
-    def append(self, value: Any):
+    def append(self, value: Any):  # todo убрать метод после добавления атрибута класса CLASS_NODE
         """ Добавление элемента в конец связного списка. """
         append_node = DoubleLinkedNode(value)
 
@@ -125,7 +131,7 @@ class DoubleLinkedList(LinkedList):
 
         self._len += 1
 
-    def insert(self, index: int, value: Any) -> None:
+    def insert(self, index: int, value: Any) -> None:  # todo убрать метод после добавления атрибута класса CLASS_NODE
         if not isinstance(index, int):
             raise TypeError()
 
