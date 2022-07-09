@@ -4,7 +4,7 @@ from node import Node
 from node import DoubleLinkedNode
 
 
-class TestCase(unittest.TestCase):
+class TestCase(unittest.TestCase):  # todo TestNode
 
     def test_repr_node_without_next(self):
         node = Node("node_without_next")
@@ -20,10 +20,11 @@ class TestCase(unittest.TestCase):
         Node.is_valid(None)
         Node.is_valid(Node("correct_node"))
 
-        with self.assertRaises(TypeError):
+        msg = ...
+        with self.assertRaises(TypeError, msg=msg):
             Node.is_valid("incorrect_type")
 
-    def test_repr_node_with_next_and_prev(self):
+    def test_repr_node_with_next_and_prev(self):  # todo в отдельный класс TestDoubleLinkedNode
         second_node = DoubleLinkedNode(2, DoubleLinkedNode(1), DoubleLinkedNode(3))
         msg = "Значение представления __repr__ некорректно для случая когда установлен следующий узел . "
         self.assertEqual(repr(second_node), "DoubleLinkedNode(2, DoubleLinkedNode(1), DoubleLinkedNode(3))", msg)

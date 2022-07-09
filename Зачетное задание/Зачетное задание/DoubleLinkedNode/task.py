@@ -12,7 +12,7 @@ class Node:
     def __str__(self) -> str:
         return str(self.value)
 
-    def is_valid(self, node: Any) -> None:
+    def is_valid(self, node: Any) -> None:  # todo staticmethod
         if not isinstance(node, (type(None), Node)):
             raise TypeError
 
@@ -44,6 +44,8 @@ class DoubleLinkedNode(Node):
     def prev(self, prev: Optional["Node"]):
         self.is_valid(prev)
         self._prev = prev
+
+    # todo перегрузить или переписать метод is_valid
 
 
 if __name__ == "__main__":

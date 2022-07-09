@@ -1,5 +1,6 @@
 from typing import Iterable, Optional, Any
 from collections.abc import MutableSequence
+
 from node import Node, DoubleLinkedNode
 
 
@@ -57,7 +58,7 @@ class LinkedList(MutableSequence):
         node.value = value
 
     def __delitem__(self, index: int):
-        if not isinstance(index, int):
+        if not isinstance(index, int):  # fixme DRY вынести в отдельный метод, например, is_valid_index
             raise TypeError()
 
         if not 0 <= index < self._len:
@@ -106,6 +107,7 @@ class LinkedList(MutableSequence):
             self.linked_nodes(insert_node, next_node)
 
             self._len += 1
+
 
 class DoubleLinkedList(LinkedList):
     @staticmethod
